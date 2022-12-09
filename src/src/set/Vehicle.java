@@ -12,6 +12,7 @@ public abstract class Vehicle implements Moveable{
     private double dir;
     private double turnFactor;
     private boolean allowedToMove = true;
+    private boolean carOn;
     public Vehicle(int nrDoors, double enginePower, double currentSpeed, Color color, String modelName, double turnFactor) {
         this.nrDoors = nrDoors;
         this.enginePower = enginePower;
@@ -19,12 +20,12 @@ public abstract class Vehicle implements Moveable{
         this.color = color;
         this.modelName = modelName;
         this.turnFactor = turnFactor;
-        Random rnd = new Random();
-        x = rnd.nextDouble(0, maxCoords);
+        //Random rnd = new Random();
+        x = 0;//rnd.nextDouble(0, maxCoords);
         y = 0;//rnd.nextDouble(0, maxCoords);
     }
     
-    public void setCurrentSpeed(double speed){
+    private void setCurrentSpeed(double speed){
         if(allowedToMove){
             if(speed > getEnginePower()) {
                 this.currentSpeed = getEnginePower();
@@ -42,33 +43,22 @@ public abstract class Vehicle implements Moveable{
         }
     }
 
-    public void startEngine(){
-        setCurrentSpeed(0.2);
-    }
-    public void setColor(Color clr){
-        color = clr;
-    }
 
-    public void setDir(double dir) {
-        if(dir > 0) this.dir = dir % (2 * Math.PI);
-        if(dir < 0) this.dir = (2 * Math.PI) -((-dir) % (2 * Math.PI));
-    }
-
-    public void setX(double x) {
+    public void setCoords(int x, int y){
         this.x = x;
-    }
-
-    public void setY(double y) {
         this.y = y;
     }
 
+    private void setDir(double dir) {
+        if(dir > 0) this.dir = dir % (2 * Math.PI);
+        if(dir < 0) this.dir = (2 * Math.PI) -((-dir) % (2 * Math.PI));
+    }
     public void setAllowedToMove(boolean allowedToMove) {
         this.allowedToMove = allowedToMove;
     }
     public boolean isAllowedToMove() {
         return allowedToMove;
     }
-
     public double getDir() {
         return dir;
     }
@@ -78,10 +68,6 @@ public abstract class Vehicle implements Moveable{
     public double getY() {
         return y;
     }
-    public int getNrDoors(){
-        return nrDoors;
-    }
-
     public double getEnginePower(){
         return enginePower;
     }
@@ -91,18 +77,25 @@ public abstract class Vehicle implements Moveable{
     public Color getColor(){
         return color;
     }
-    public int getMaxCoords() {
-        return maxCoords;
-    }
+    public int getMaxCoords() {return maxCoords;}
 
     public void stopEngine(){
-        setCurrentSpeed(0);
+        if(carOn){
+            setCurrentSpeed(0);
+            carOn = false;
+        }
     }
-    public void incrementSpeed(double amount){
+    public void startEngine(){
+        if(!carOn){
+            setCurrentSpeed(0.2);
+            carOn = true;
+        }
+    }
+    private void incrementSpeed(double amount){
         setCurrentSpeed(getCurrentSpeed() + speedFactor() * amount);
     }
 
-    public void decrementSpeed(double amount){
+    private void decrementSpeed(double amount){
         setCurrentSpeed(getCurrentSpeed() - speedFactor() * amount);
     }
     public void move() {
@@ -119,11 +112,8 @@ public abstract class Vehicle implements Moveable{
 
 
     public void gas(double amount){
-        if(amount > 0) {
+        if(amount > 0 && carOn) {
             incrementSpeed(amount);
-        }else{
-            System.out.println("gas vehicle");
-            System.out.print("Invalid amount: " + amount);
         }
     }
     public void brake(double amount){
@@ -133,6 +123,5 @@ public abstract class Vehicle implements Moveable{
             System.out.print("Invalid amount: " + amount);
         }
     }
-    
     public abstract double speedFactor();
 }

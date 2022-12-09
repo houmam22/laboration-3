@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
  * It initializes with being center on the screen and attaching it's controller in it's state.
@@ -20,8 +21,7 @@ public class CarView extends JFrame{
     // The controller member
     CarController carC;
 
-    DrawPanel drawPanel = new DrawPanel(X, Y-240);
-
+    DrawPanel drawPanel = new DrawPanel(X, Y - 240);
     JPanel controlPanel = new JPanel();
 
     JPanel gasPanel = new JPanel();
@@ -42,7 +42,13 @@ public class CarView extends JFrame{
     // Constructor
     public CarView(String framename, CarController cc){
         this.carC = cc;
+        for(CarFrame car: cc.cars){
+            addCarView(car);
+        }
         initComponents(framename);
+    }
+    public void addCarView(CarFrame car){
+        drawPanel.addCarView(car.getImage());
     }
 
     // Sets everything in place and fits everything
@@ -107,6 +113,12 @@ public class CarView extends JFrame{
                 carC.startEngine();
             }
         });
+        stopButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.stopEngine();
+            }
+        });
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -126,4 +138,6 @@ public class CarView extends JFrame{
         // Make sure the frame exits when "x" is pressed
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
+
 }

@@ -3,6 +3,7 @@ package src.set;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
+/*
 public class CarTest {
     
     @Test
@@ -183,3 +184,5 @@ public class CarTest {
         assertEquals(shop.getLoadedCars().contains(car), false);
     }
 }
+
+ */

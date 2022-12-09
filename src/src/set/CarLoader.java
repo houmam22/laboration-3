@@ -9,8 +9,9 @@ public class CarLoader {
             if(Math.sqrt(Math.pow(loader.getX()-car.getX(), 2) + Math.pow(loader.getY()-car.getY(), 2)) <= 10){
                 if(loader.getLoadedCars().size() < loader.getLoadCapacity()){
                     loader.getLoadedCars().add(car);
-                    car.setX(car.getMaxCoords() + marginTrash);
-                    car.setY(car.getMaxCoords() + marginTrash);
+                    car.setCoords(car.getMaxCoords() + marginTrash, car.getMaxCoords() + marginTrash);
+                    //car.setX(car.getMaxCoords() + marginTrash);
+                    //car.setY(car.getMaxCoords() + marginTrash);
                     car.setAllowedToMove(false);
                 } else {
                     System.out.println("Max loaded cars reached");
@@ -21,7 +22,6 @@ public class CarLoader {
     public void unloadCar(Vehicle car, LoaderInter loader){
         car.setAllowedToMove(true);
         loader.getLoadedCars().remove(car);
-        car.setX(loader.getX());
-        car.setY(loader.getY() + marginTrash);
+        car.setCoords((int) loader.getX(), (int) loader.getY() + marginTrash);
     }
 }
