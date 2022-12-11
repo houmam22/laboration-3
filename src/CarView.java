@@ -4,6 +4,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 
 /**
@@ -19,7 +20,7 @@ public class CarView extends JFrame{
     private static final int Y = 800;
 
     // The controller member
-    CarController carC;
+    CarController cc;
 
     DrawPanel drawPanel = new DrawPanel(X, Y - 240);
     JPanel controlPanel = new JPanel();
@@ -40,9 +41,9 @@ public class CarView extends JFrame{
     JButton stopButton = new JButton("Stop all cars");
 
     // Constructor
-    public CarView(String framename, CarController cc){
-        this.carC = cc;
-        for(CarFrame car: cc.cars){
+    public CarView(String framename, ArrayList<CarFrame> cars, CarController cc){
+        this.cc = cc;
+        for(CarFrame car: cars){
             addCarView(car);
         }
         initComponents(framename);
@@ -110,19 +111,19 @@ public class CarView extends JFrame{
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.startEngine();
+                cc.startEngine();
             }
         });
         stopButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.stopEngine();
+                cc.stopEngine();
             }
         });
         gasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                carC.gas(gasAmount);
+                cc.gas(gasAmount);
             }
         });
 
