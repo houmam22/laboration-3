@@ -1,6 +1,6 @@
 package src.set;
 
 public interface truckInter{
-    void setAllowedToMove();
+    boolean getAllowedToMove();
     double speedFactor();
 }

@@ -26,7 +26,7 @@ public abstract class Vehicle implements Moveable{
     }
     
     private void setCurrentSpeed(double speed){
-        if(allowedToMove){
+        if(this.getAllowedToMove()){
             if(speed > getEnginePower()) {
                 this.currentSpeed = getEnginePower();
                 System.out.print("speed too high, was set to enginePower");
@@ -56,7 +56,7 @@ public abstract class Vehicle implements Moveable{
     public void setAllowedToMove(boolean allowedToMove) {
         this.allowedToMove = allowedToMove;
     }
-    public boolean isAllowedToMove() {
+    public boolean getAllowedToMove() {
         return allowedToMove;
     }
     public double getDir() {
