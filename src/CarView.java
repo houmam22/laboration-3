@@ -26,12 +26,12 @@ public class CarView extends JFrame{
 
 
     // Constructor
-    public CarView(String framename, ArrayList<CarFrame> cars){
+    public CarView(/*String framename,*/ ArrayList<CarFrame> cars){
 
         for(CarFrame car: cars){
             addCarView(car);
         }
-        initComponents(framename);
+        //initComponents(framename);
     }
     public void addCarView(CarFrame car){
         drawPanel.addCarView(car.getImage());
@@ -39,7 +39,7 @@ public class CarView extends JFrame{
 
     // Sets everything in place and fits everything
     // TODO: Take a good look and make sure you understand how these methods and components work
-    private void initComponents(String title) {
+    public void initComponents(String title) {
 
         this.setTitle(title);
         this.setPreferredSize(new Dimension(X,Y));
